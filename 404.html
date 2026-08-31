@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fit Tomato</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, sans-serif; background: #0f0f0f; color: #fff;
+           display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .card { text-align: center; padding: 40px 24px; max-width: 360px; }
+    h2 { font-size: 22px; margin: 16px 0 8px; }
+    p { color: #888; font-size: 15px; margin: 0 0 32px; }
+    .btn { display: inline-block; background: #FF6B35; color: #fff; text-decoration: none;
+           border-radius: 12px; padding: 14px 28px; font-size: 16px; font-weight: 600; }
+    .hint { font-size: 13px; color: #555; margin-top: 16px; }
+    #not-share { display: none; }
+  </style>
+</head>
+<body>
+  <div id="share-view" class="card">
+    <div style="font-size:48px">🏋️</div>
+    <h2>Открываем план тренировок</h2>
+    <p>Если приложение не открылось — установите Fit Tomato</p>
+    <a id="deep-link" href="#" class="btn">Открыть в приложении</a>
+    <div class="hint">Нет приложения?
+      <a href="https://www.rustore.ru/catalog/app/com.mfred.fittomato" target="_black" style="color:#FF6B35">Скачать</a>
+    </div>
+  </div>
+
+  <div id="not-share" class="card">
+    <div style="font-size:48px">🤷</div>
+    <h2>Страница не найдена</h2>
+    <a href="/" class="btn">На главную</a>
+  </div>
+
+  <script>
+    const path = window.location.pathname;
+    const match = path.match(/^\/share\/([a-f0-9\-]{36})$/i);
+
+    if (match) {
+      const token = match[1];
+      const deepLink = 'fittomato://share/' + token;
+      document.getElementById('deep-link').href = deepLink;
+      window.location.href = deepLink;
+    } else {
+      document.getElementById('share-view').style.display = 'none';
+      document.getElementById('not-share').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
