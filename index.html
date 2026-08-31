@@ -1,0 +1,189 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>mFred</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="mFred — фронтендер. Небольшие веб- и десктоп-приложения, которые упрощают жизнь: мультичат для стримеров, планировщик расписания, фитнес-дневник." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f3ee;
+    --paper-raised: #ffffff;
+    --ink: #1a1820;
+    --ink-soft: #6c6875;
+    --line: rgba(26,24,32,0.12);
+    --line-strong: rgba(26,24,32,0.22);
+    --tomato: #dd3c28;
+    --tomato-wash: rgba(221,60,40,0.1);
+    --leaf: #2f9a56;
+    --shadow: 0 1px 2px rgba(26,24,32,0.06), 0 12px 32px -16px rgba(26,24,32,0.18);
+    --radius: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131118; --paper-raised: #1b1822; --ink: #f3f0ea; --ink-soft: #a29daf;
+      --line: rgba(243,240,234,0.12); --line-strong: rgba(243,240,234,0.22);
+      --tomato: #ff6449; --tomato-wash: rgba(255,100,73,0.14); --leaf: #4fc37a;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 20px 48px -20px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131118; --paper-raised: #1b1822; --ink: #f3f0ea; --ink-soft: #a29daf;
+    --line: rgba(243,240,234,0.12); --line-strong: rgba(243,240,234,0.22);
+    --tomato: #ff6449; --tomato-wash: rgba(255,100,73,0.14); --leaf: #4fc37a;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 20px 48px -20px rgba(0,0,0,0.6);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+  }
+  ::selection { background: var(--tomato); color: #fff; }
+  a { color: inherit; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  .wrap { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  main { flex: 1; display: flex; align-items: center; padding: 72px 0; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--tomato);
+    padding: 6px 12px; border: 1px solid var(--tomato); border-radius: 999px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tomato); }
+
+  h1 {
+    font-family: 'Unbounded', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700; letter-spacing: -0.01em; text-wrap: balance;
+    font-size: clamp(2.1rem, 6vw, 3.1rem);
+    margin: 22px 0 0;
+  }
+  .lede {
+    margin: 16px 0 0; color: var(--ink-soft); font-size: 1.1rem; max-width: 52ch;
+  }
+
+  .cards { margin-top: 40px; display: grid; gap: 14px; }
+  .card {
+    display: flex; align-items: center; gap: 18px;
+    text-decoration: none; color: inherit;
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+  .card .ic {
+    flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px;
+    display: grid; place-items: center;
+    background: var(--tomato-wash); color: var(--tomato);
+  }
+  .card:nth-child(2) .ic { background: rgba(47,154,86,0.12); color: var(--leaf); }
+  .card .ic svg { width: 20px; height: 20px; }
+  .card .body { flex: 1; min-width: 0; }
+  .card h2 {
+    font-family: 'Manrope', sans-serif; font-size: 1.05rem; font-weight: 700; margin: 0;
+  }
+  .card p { margin: 3px 0 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .card .host { flex: 0 0 auto; font-size: 0.8rem; color: var(--ink-soft); }
+  .card .arrow { flex: 0 0 auto; color: var(--ink-soft); transition: transform .15s ease; }
+  .card:hover .arrow { transform: translateX(3px); color: var(--ink); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 22px 0;
+    font-size: 0.9rem; color: var(--ink-soft);
+  }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .footer-links { display: flex; gap: 8px; align-items: center; }
+  .footer-links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none; color: var(--ink-soft);
+    padding: 6px 10px; border-radius: 999px;
+  }
+  .footer-links a:hover { color: var(--ink); background: var(--tomato-wash); }
+  .footer-links svg { width: 16px; height: 16px; }
+
+  @media (max-width: 520px) {
+    .card { flex-wrap: wrap; }
+    .card .host { order: 3; width: 100%; }
+    .card .arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> mFred</span>
+    <h1>Делаю приложения, которые упрощают жизнь.</h1>
+    <p class="lede">Много лет во фронтенде. Небольшие веб- и десктоп-инструменты — сначала для себя, потом делюсь, если пригодятся другим. Превозмогать свои пределы — это мой путь ниндзя.</p>
+
+    <div class="cards">
+      <a class="card" href="https://chat.mfred.ru/">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16v11H8l-4 4V5Z"/></svg></span>
+        <span class="body">
+          <h2>mFchat</h2>
+          <p>Мультичат для стримеров: Twitch, VK Play и Kick в одной ленте, озвучка и оверлеи для OBS.</p>
+        </span>
+        <span class="host mono">chat.mfred.ru</span>
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="card" href="https://schedule.mfred.ru/">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
+        <span class="body">
+          <h2>Расписание</h2>
+          <p>Планировщик расписания стримов с картинкой для соцсетей.</p>
+        </span>
+        <span class="host mono">schedule.mfred.ru</span>
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="card" href="https://fit.mfred.ru/">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6.5 6.5 4 9l3 3-3 3 2.5 2.5M17.5 6.5 20 9l-3 3 3 3-2.5 2.5M9 15l6-6"/></svg></span>
+        <span class="body">
+          <h2>Фитнес</h2>
+          <p>Дневник тренировок: программы, подходы, прогресс.</p>
+        </span>
+        <span class="host mono">fit.mfred.ru</span>
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© mFred</span>
+    <div class="footer-links">
+      <a href="https://www.twitch.tv/mfred" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2 3 6v14h5v2h3l2-2h4l4-4V2H4Zm16 11-2 2h-4l-2 2v-2H8V4h12v9ZM15 7h-2v4h2V7Zm-5 0H8v4h2V7Z"/></svg>
+        twitch.tv/mfred
+      </a>
+      <a href="https://github.com/mfreddi" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 5.02 3.26 9.28 7.78 10.78.57.1.78-.25.78-.55 0-.27-.01-1.15-.02-2.09-3.17.69-3.83-1.36-3.83-1.36-.52-1.31-1.26-1.66-1.26-1.66-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.74 2.66 1.24 3.31.94.1-.73.4-1.24.72-1.52-2.53-.29-5.19-1.27-5.19-5.63 0-1.24.44-2.26 1.17-3.06-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.14 1.17.91-.25 1.89-.38 2.86-.38.97 0 1.95.13 2.86.38 2.18-1.48 3.14-1.17 3.14-1.17.62 1.57.23 2.73.11 3.02.73.8 1.17 1.82 1.17 3.06 0 4.37-2.66 5.34-5.2 5.62.41.36.77 1.06.77 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55 4.52-1.51 7.77-5.76 7.77-10.78C23.02 5.24 18.27.5 12 .5Z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
