@@ -1,1 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переезд сайта</title>
+    
+    <!-- Перенаправление через метатег (сработает сразу) -->
+    <meta http-equiv="refresh" content="0; url=https://fit.mfred.ru/disclaimer.html">
+    
+    <!-- Подстраховка через JavaScript, если метатег заблокирован -->
+    <script type="text/javascript">
+        var newDomain = "https://fit.mfred.ru";
+        window.location.replace(newDomain + window.location.pathname + window.location.search + window.location.hash);
+    </script>
 
+    <!-- Поисковая подсказка для роботов (SEO) -->
+    <link rel="canonical" href="https://fit.mfred.ru" />
+</head>
+<body>
+</body>
+</html>
