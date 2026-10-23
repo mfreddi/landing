@@ -21,5 +21,5 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./ # Забираем всё содержимое репозитория
         server-dir: ${{ secrets.FTP_DIR }}
-        protocol: ftp      # Используем чистый FTP без SSL
+        protocol: ftps
         security: loose    # Отключаем строгую валидацию
