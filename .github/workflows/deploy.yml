@@ -16,8 +16,10 @@ jobs:
     - name: Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        server: beget.com
+        server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./ # Забираем всё содержимое репозитория
         server-dir: ${{ secrets.FTP_DIR }}
+        protocol: ftp      # Используем чистый FTP без SSL
+        security: loose    # Отключаем строгую валидацию
